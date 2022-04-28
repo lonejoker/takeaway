@@ -1,26 +1,20 @@
 package com.xiaobai.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.xiaobai.mapper.EmployeeMapper;
 import com.xiaobai.entity.Employee;
+import com.xiaobai.mapper.EmployeeMapper;
 import com.xiaobai.service.EmployeeService;
 import com.xiaobai.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
 
 /**
  * @author 终于白发始于青丝
@@ -93,5 +87,25 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         employeeMapper.insert(employee);
 
         return R.success("新增员工成功");
+    }
+
+    @Override
+    public R<Page> pageInfo(int page, int pageSize, String name) {
+        log.info("page = {}，pageSize = {}，name = {}", page, pageSize, name);
+
+        //构造分页构造器
+        Page pageInfo = new Page(page, pageSize);
+
+        //构造条件构造器
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+        //添加过滤条件
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+        //添加排序条件
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+        //执行查询
+        employeeMapper.selectPage(pageInfo, queryWrapper);
+
+        return R.success(pageInfo);
     }
 }

@@ -1,16 +1,15 @@
 package com.xiaobai.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaobai.entity.Employee;
 import com.xiaobai.service.EmployeeService;
 import com.xiaobai.util.R;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.Serializable;
-import java.util.List;
 import java.io.Serializable;
 
 /**
@@ -42,5 +41,10 @@ public class EmployeeController implements Serializable {
     @PostMapping
     public R<String> saveUser(HttpServletRequest request, @RequestBody Employee employee) {
         return employeeService.saveUser(request, employee);
+    }
+
+    @GetMapping("/page")
+    public R<Page> pageInfo(int page, int pageSize, String name) {
+        return employeeService.pageInfo(page, pageSize, name);
     }
 }
