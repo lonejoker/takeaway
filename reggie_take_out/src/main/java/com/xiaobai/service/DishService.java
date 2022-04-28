@@ -1,7 +1,9 @@
 package com.xiaobai.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.xiaobai.entity.Dish;
+import com.xiaobai.util.R;
 import com.xiaobai.vo.DishVo;
 
 /**
@@ -14,4 +16,10 @@ import com.xiaobai.vo.DishVo;
 public interface DishService extends IService<Dish> {
 
     void saveDish(DishVo dishVo);
+
+    R<Page> getPage(int page, int pageSize, String name);
+
+    R<DishVo> getDishInfo(Long id);
+
+    void updateWithFlavor(DishVo dishVo);
 }

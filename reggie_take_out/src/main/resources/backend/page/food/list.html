@@ -19,6 +19,7 @@
           placeholder="请输入菜品名称"
           style="width: 250px"
           clearable
+          @clear="queryClear"
           @keyup.enter.native="handleQuery"
         >
           <i
@@ -158,6 +159,9 @@
         mounted() {
         },
         methods: {
+          queryClear () {
+            this.init()
+          },
           async init () {
             const params = {
               page: this.page,
