@@ -5,6 +5,7 @@ import com.xiaobai.mapper.EmployeeMapper;
 import com.xiaobai.entity.Employee;
 import com.xiaobai.service.EmployeeService;
 import com.xiaobai.util.R;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,6 +19,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -28,6 +30,7 @@ import java.util.*;
  * @Description 类方法说明：
  */
 @Service
+@Slf4j
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 
     @Autowired
@@ -69,5 +72,26 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         //清理Session中保存的当前登录员工的id
         request.getSession().removeAttribute("employee");
         return R.success("退出成功");
+    }
+
+    @Override
+    public R<String> saveUser(HttpServletRequest request, Employee employee) {
+        log.info("新增员工，员工信息：{}", employee.toString());
+
+        //设置初始密码123456，需要进行md5加密处理
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+
+        employee.setCreateTime(new Date());
+        employee.setUpdateTime(new Date());
+
+        // 获得当前登录用户的id
+        Long empId = (Long) request.getSession().getAttribute("employee");
+
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeMapper.insert(employee);
+
+        return R.success("新增员工成功");
     }
 }
