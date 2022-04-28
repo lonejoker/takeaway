@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 /**
  * @author 终于白发始于青丝
@@ -75,14 +74,14 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
         //设置初始密码123456，需要进行md5加密处理
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
 
-        employee.setCreateTime(new Date());
-        employee.setUpdateTime(new Date());
+        // employee.setCreateTime(new Date());
+        // employee.setUpdateTime(new Date());
 
         // 获得当前登录用户的id
-        Long empId = (Long) request.getSession().getAttribute("employee");
+        // Long empId = (Long) request.getSession().getAttribute("employee");
 
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        // employee.setCreateUser(empId);
+        // employee.setUpdateUser(empId);
 
         employeeMapper.insert(employee);
 
@@ -113,9 +112,9 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     public R<String> updateStatus(HttpServletRequest request, Employee employee) {
         log.info(employee.toString());
 
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(new Date());
-        employee.setUpdateUser(empId);
+        // Long empId = (Long) request.getSession().getAttribute("employee");
+        // employee.setUpdateTime(new Date());
+        // employee.setUpdateUser(empId);
         employeeMapper.updateById(employee);
 
         return R.success("员工信息修改成功");
