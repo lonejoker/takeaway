@@ -47,4 +47,14 @@ public class EmployeeController implements Serializable {
     public R<Page> pageInfo(int page, int pageSize, String name) {
         return employeeService.pageInfo(page, pageSize, name);
     }
+
+    @PutMapping
+    public R<String> updateStatus(HttpServletRequest request, @RequestBody Employee employee) {
+        return employeeService.updateStatus(request, employee);
+    }
+
+    @GetMapping("/{id}")
+    public R<Employee> getUserById(@PathVariable Long id) {
+        return employeeService.getUserById(id);
+    }
 }

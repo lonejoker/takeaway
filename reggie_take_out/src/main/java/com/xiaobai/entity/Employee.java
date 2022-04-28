@@ -1,13 +1,13 @@
 package com.xiaobai.entity;
 
-import java.util.Date;
-import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author 终于白发始于青丝
@@ -40,8 +40,10 @@ public class Employee implements Serializable {
     // 状态 0:禁用，1:正常
     private Integer status;
     // 创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date createTime;
     // 更新时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date updateTime;
     // 创建人
     @TableField(fill = FieldFill.INSERT)

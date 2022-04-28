@@ -23,4 +23,8 @@ public interface EmployeeService extends IService<Employee> {
     R<String> saveUser(HttpServletRequest request, Employee employee);
 
     R<Page> pageInfo(int page, int pageSize, String name);
+
+    R<String> updateStatus(HttpServletRequest request, Employee employee);
+
+    R<Employee> getUserById(Long id);
 }
