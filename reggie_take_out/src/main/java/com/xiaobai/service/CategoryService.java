@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xiaobai.entity.Category;
 import com.xiaobai.util.R;
 
+import java.util.List;
+
 /**
  * @author 终于白发始于青丝
  * @create 2022-04-28 12:13:55
@@ -21,4 +23,6 @@ public interface CategoryService extends IService<Category> {
     R<String> deleteCategory(Long ids);
 
     R<String> updateCategory(Category category);
+
+    R<List<Category>> categoryList(Category category);
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author 终于白发始于青丝
@@ -90,6 +91,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         log.info("修改分类信息：{}", category);
         categoryMapper.updateById(category);
         return R.success("修改分类信息成功");
+    }
+
+    @Override
+    public R<List<Category>> categoryList(Category category) {
+        //条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        //添加条件
+        queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+        //添加排序条件
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+
+        List<Category> list = categoryMapper.selectList(queryWrapper);
+        return R.success(list);
     }
 
 }

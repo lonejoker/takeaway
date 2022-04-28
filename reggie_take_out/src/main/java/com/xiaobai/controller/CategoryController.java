@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author 终于白发始于青丝
@@ -45,6 +46,11 @@ public class CategoryController implements Serializable {
     @PutMapping
     public R<String> updateCategory(@RequestBody Category category) {
         return categoryService.updateCategory(category);
+    }
+
+    @GetMapping("/list")
+    public R<List<Category>> categoryList(Category category){
+        return categoryService.categoryList(category);
     }
 
 

@@ -11,36 +11,26 @@ import java.util.Date;
 
 /**
  * @author 终于白发始于青丝
- * @create 2022-04-28 13:32:11
+ * @create 2022-04-28 14:53:45
  * @Version 1.0
- * @ClassName Dish
+ * @ClassName DishFlavor
  * @Description 类方法说明：
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value = "dish")
-public class Dish implements Serializable {
+@TableName(value = "dish_flavor")
+public class DishFlavor implements Serializable {
     public static final long serialVersionUID = 1L;
     // 主键
     @TableId(type = IdType.AUTO)
     private Long id;
-    // 菜品名称
+    // 菜品
+    private Long dishId;
+    // 口味名称
     private String name;
-    // 菜品分类id
-    private Long categoryId;
-    // 菜品价格
-    private Double price;
-    // 商品码
-    private String code;
-    // 图片
-    private String image;
-    // 描述信息
-    private String description;
-    // 0 停售 1 起售
-    private Integer status;
-    // 顺序
-    private Integer sort;
+    // 口味数据list
+    private String value;
     // 创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     @TableField(fill = FieldFill.INSERT)
