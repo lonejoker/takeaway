@@ -33,4 +33,9 @@ public class EmployeeController implements Serializable {
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
         return employeeService.login(request, employee);
     }
+
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request) {
+        return employeeService.logout(request);
+    }
 }
