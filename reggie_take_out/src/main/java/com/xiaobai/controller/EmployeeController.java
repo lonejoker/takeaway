@@ -1,12 +1,14 @@
 package com.xiaobai.controller;
 
 
-
 import com.xiaobai.entity.Employee;
 import com.xiaobai.service.EmployeeService;
+import com.xiaobai.util.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.List;
 import java.io.Serializable;
@@ -21,11 +23,14 @@ import java.io.Serializable;
 @RestController
 @Slf4j
 @RequestMapping("/employee")
-public class EmployeeController implements Serializable{
+public class EmployeeController implements Serializable {
     public static final long serialVersionUID = 1L;
-    
+
     @Autowired
     private EmployeeService employeeService;
-    
-    
+
+    @PostMapping("/login")
+    public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
+        return employeeService.login(request, employee);
+    }
 }
